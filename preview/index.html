@@ -13,39 +13,22 @@
         --muted: #9aa8a1;
         --accent: #3dd68c;
         --stage: #0b0f0d;
+        --nh: #00a651;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
-      html,
-      body {
+      html, body {
         margin: 0;
         min-height: 100%;
-        background: radial-gradient(1200px 600px at 20% -10%, #1b3a2c 0%, transparent 55%),
-          var(--bg);
+        background: radial-gradient(1200px 600px at 20% -10%, #1b3a2c 0%, transparent 55%), var(--bg);
         color: var(--text);
         font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       }
 
-      .wrap {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 32px 20px 48px;
-      }
-
-      header h1 {
-        margin: 0 0 8px;
-        font-size: 28px;
-        letter-spacing: -0.03em;
-      }
-
-      header p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.55;
-      }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 48px; }
+      header h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: -0.03em; }
+      header p { margin: 0; color: var(--muted); line-height: 1.55; }
 
       .grid {
         display: grid;
@@ -54,7 +37,7 @@
         margin-top: 28px;
       }
 
-      .card {
+      .card-ui {
         background: var(--panel);
         border: 1px solid var(--line);
         border-radius: 24px;
@@ -70,64 +53,93 @@
           linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
           var(--stage);
         border-radius: 20px;
-        position: relative;
+      }
+
+      .stages {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 24px 12px;
+      }
+
+      .caption {
+        margin: 10px 0 0;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      #lottie {
         overflow: hidden;
       }
 
-      #stage {
-        width: 312px;
-        height: 312px;
-        display: grid;
-        place-items: center;
-      }
-
-      #stage img,
-      #stage video,
-      #stage svg,
-      #stage .lottie {
+      .icon {
+        position: relative;
         width: 156px;
         height: 156px;
-        object-fit: contain;
-      }
-
-      #stage svg {
-        overflow: visible;
-      }
-
-      .empty {
-        position: absolute;
-        inset: 0;
-        display: none;
-        place-items: center;
-        text-align: center;
-        padding: 24px;
-      }
-
-      .empty.show {
-        display: grid;
-      }
-
-      .empty .box {
-        width: 156px;
-        height: 156px;
-        border: 1.5px dashed rgba(255, 255, 255, 0.28);
         border-radius: 36px;
+        background: #eef6f1;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      }
+
+      .layer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        will-change: transform, opacity;
+        opacity: 0;
+      }
+
+      .bill {
+        width: 102px;
+        height: 66px;
+        border-radius: 14px;
+        box-shadow: 0 8px 18px rgba(16, 64, 38, 0.18);
+      }
+
+      .bill-back { background: linear-gradient(180deg, #9fd7b5, #6fbf8f); }
+      .bill-mid { background: linear-gradient(180deg, #d7f0e1, #b7e0c8); }
+      .bill-front {
+        background: #fff;
+        display: grid;
+        align-content: start;
+        gap: 8px;
+        padding: 12px 12px 0;
+      }
+
+      .bill-front .stripe {
+        height: 8px;
+        border-radius: 99px;
+        background: var(--nh);
+        width: 42px;
+      }
+
+      .bill-front .line {
+        height: 6px;
+        border-radius: 99px;
+        background: #e2ece6;
+      }
+
+      .bill-front .line.short { width: 54%; }
+
+      .badge {
+        left: 86px;
+        top: 78px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--nh);
         display: grid;
         place-items: center;
-        color: var(--muted);
-        margin: 0 auto 16px;
-        background: rgba(255, 255, 255, 0.03);
+        transform-origin: 50% 50%;
+        box-shadow: 0 8px 16px rgba(0, 166, 81, 0.35);
       }
 
-      .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 16px;
-      }
+      .badge svg { display: block; }
 
-      button,
-      label.file {
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+      button {
         appearance: none;
         border: 0;
         border-radius: 999px;
@@ -138,22 +150,27 @@
         font: inherit;
       }
 
-      button:hover,
-      label.file:hover {
-        background: #2d4037;
+      button.primary { background: var(--accent); color: #062013; font-weight: 700; }
+
+      .timeline {
+        margin-top: 14px;
+        height: 8px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
       }
 
-      button.primary {
+      .playhead {
+        height: 100%;
+        width: 0;
         background: var(--accent);
-        color: #062013;
-        font-weight: 700;
       }
 
       .meta {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
-        margin: 0 0 18px;
+        margin: 0 0 16px;
       }
 
       .meta div {
@@ -162,78 +179,27 @@
         padding: 12px 14px;
       }
 
-      .meta dt {
-        color: var(--muted);
-        font-size: 12px;
-        margin: 0 0 4px;
-      }
+      .meta dt { color: var(--muted); font-size: 12px; margin: 0 0 4px; }
+      .meta dd { margin: 0; font-weight: 700; }
 
-      .meta dd {
-        margin: 0;
-        font-weight: 700;
-      }
+      .beats { margin: 0; padding: 0; list-style: none; color: var(--muted); line-height: 1.65; }
+      .beats strong { color: var(--text); }
 
       .alert {
         border-radius: 16px;
         padding: 14px 16px;
-        background: rgba(255, 107, 107, 0.12);
-        color: #ffd2d2;
-        line-height: 1.55;
-        margin-bottom: 16px;
-      }
-
-      .alert.ok {
         background: rgba(61, 214, 140, 0.12);
         color: #d7ffe9;
-      }
-
-      .alert.info {
-        background: rgba(255, 255, 255, 0.06);
-        color: #d7e4dc;
-      }
-
-      .drop {
-        border: 1.5px dashed rgba(255, 255, 255, 0.22);
-        border-radius: 18px;
-        padding: 18px;
-        text-align: center;
-        color: var(--muted);
-      }
-
-      .drop.over {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-
-      .guide {
-        margin: 0 0 16px;
-        padding: 0;
-        list-style: none;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.6;
-      }
-
-      .guide li strong {
-        color: var(--text);
-      }
-
-      pre {
-        white-space: pre-wrap;
-        word-break: break-all;
-        background: #0b0f0d;
-        border-radius: 14px;
-        padding: 12px;
-        font-size: 12px;
-        color: #c9d4ce;
-        max-height: 180px;
-        overflow: auto;
+        line-height: 1.55;
+        margin: 16px 0;
       }
 
       @media (max-width: 800px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
+        .grid { grid-template-columns: 1fr; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .playhead { display: none; }
       }
     </style>
   </head>
@@ -242,346 +208,100 @@
       <header>
         <h1>Icon156_03 모션 미리보기</h1>
         <p>
-          GIF, MP4, SVG, CSS, Lottie JSON을 같은 156×156 스테이지에서 확인합니다.
-          앱용 JSON이 필요하면 SVG+CSS가 가장 정확하고, GIF/MP4는 모션 레퍼런스로 사용합니다.
+          Figma 키프레임 그대로 2초 루프를 재생합니다. 카드 세 장이 시차를 두고 올라오며 나타나고,
+          0.7초에 배지가 스프링으로 팝인됩니다.
         </p>
       </header>
 
       <div class="grid">
-        <section class="card">
-          <div class="stage-wrap">
-            <div id="stage"></div>
-            <div class="empty show" id="empty">
-              <div>
-                <div class="box">156</div>
-                <strong>파일을 올리면 여기에 재생됩니다</strong>
+        <section class="card-ui">
+          <div class="stage-wrap stages">
+            <div>
+              <div class="icon" id="icon" aria-label="Icon156_03 reconstructed motion">
+                <div class="layer bill bill-back" data-node="54:1145"></div>
+                <div class="layer bill bill-mid" data-node="54:1144"></div>
+                <div class="layer bill bill-front" data-node="54:1143">
+                  <span class="stripe"></span>
+                  <span class="line"></span>
+                  <span class="line short"></span>
+                </div>
+                <div class="layer badge" data-node="54:1151" data-layout="static">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                    <path d="M5 11.2 9.1 15.4 17 6.8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
               </div>
+              <p class="caption">키프레임 재현</p>
+            </div>
+            <div>
+              <div class="icon" id="lottie" aria-label="Icon156_03 Lottie JSON"></div>
+              <p class="caption">Lottie JSON</p>
             </div>
           </div>
+          <div class="timeline"><div class="playhead" id="playhead"></div></div>
           <div class="controls">
             <button class="primary" id="play" type="button">재생</button>
             <button id="pause" type="button">일시정지</button>
             <button id="stop" type="button">처음으로</button>
+            <span id="timeLabel">0.00s</span>
           </div>
         </section>
 
-        <section class="card">
-          <ul class="guide">
-            <li><strong>SVG + CSS</strong> → 벡터 아이콘 모션을 Lottie JSON으로 구현하기 가장 좋습니다.</li>
-            <li><strong>GIF / MP4</strong> → 바로 재생해 확인하고, 같은 모션을 벡터 JSON으로 다시 그립니다.</li>
-            <li><strong>Lottie JSON</strong> → 레이어가 있으면 그대로 재생합니다.</li>
+        <section class="card-ui">
+          <dl class="meta">
+            <div><dt>타임라인</dt><dd>2000ms loop</dd></div>
+            <div><dt>이징</dt><dd>cubic-bezier(0, 0, 0.58, 1)</dd></div>
+            <div><dt>배지 스프링</dt><dd>mass 1 / k 600 / d 15</dd></div>
+            <div><dt>노드</dt><dd>54:1143–1145, 54:1151</dd></div>
+          </dl>
+          <ul class="beats">
+            <li><strong>0–350ms</strong> 앞 카드(54:1143) Y 56→41, opacity 0→100</li>
+            <li><strong>120–470ms</strong> 가운데 카드(54:1144) Y 59.4→47.4</li>
+            <li><strong>250–600ms</strong> 뒤 카드(54:1145) Y 65.5→55.5</li>
+            <li><strong>700–1300ms</strong> 배지(54:1151) scale 0→1 스프링, 850ms에 opacity 100</li>
           </ul>
-          <dl class="meta" id="meta"></dl>
-          <div id="status" class="alert info">GIF, MP4, SVG, CSS, JSON을 함께 올려 주세요.</div>
-          <div class="drop" id="drop">
-            파일을 여기에 놓거나
-            <label class="file">
-              파일 선택
-              <input
-                id="file"
-                type="file"
-                accept="image/gif,video/mp4,image/svg+xml,text/css,application/json,.gif,.mp4,.svg,.css,.json"
-                multiple
-                hidden
-              />
-            </label>
+          <div class="alert">
+            전달하신 Figma 모션 JSON으로 타이밍·이징·스프링을 구현했습니다.
+            카드/배지 그래픽은 노드 아트가 없어 위치값에 맞춰 재구성한 것입니다.
+            원본 SVG를 주시면 같은 모션에 그래픽만 교체할 수 있습니다.
           </div>
-          <h3>소스</h3>
-          <pre id="raw">아직 올린 파일이 없습니다.</pre>
         </section>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script>
-      const els = {
-        stage: document.getElementById("stage"),
-        empty: document.getElementById("empty"),
-        meta: document.getElementById("meta"),
-        status: document.getElementById("status"),
-        raw: document.getElementById("raw"),
-        drop: document.getElementById("drop"),
-        file: document.getElementById("file"),
-        play: document.getElementById("play"),
-        pause: document.getElementById("pause"),
-        stop: document.getElementById("stop"),
-      };
+    <script type="module">
+      import { playIconMotion } from "./icon-motion.js";
 
-      const loaded = {
-        json: null,
-        gif: null,
-        mp4: null,
-        svg: null,
-        css: null,
-      };
-
-      let anim = null;
-      let objectUrls = [];
-
-      function setMeta(rows) {
-        els.meta.innerHTML = rows
-          .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
-          .join("");
-      }
-
-      function revokeUrls() {
-        objectUrls.forEach((url) => URL.revokeObjectURL(url));
-        objectUrls = [];
-      }
-
-      function clearStage() {
-        if (anim) {
-          anim.destroy();
-          anim = null;
-        }
-        document.getElementById("injected-css")?.remove();
-        els.stage.innerHTML = "";
-      }
-
-      function setStatus(kind, text) {
-        els.status.className = `alert ${kind}`;
-        els.status.textContent = text;
-      }
-
-      function showEmpty(show) {
-        els.empty.classList.toggle("show", show);
-      }
-
-      function currentMedia() {
-        return els.stage.querySelector("video, img");
-      }
-
-      function playCurrent() {
-        if (anim) {
-          anim.play();
-          return;
-        }
-        const media = currentMedia();
-        if (media && typeof media.play === "function") media.play();
-      }
-
-      function pauseCurrent() {
-        if (anim) {
-          anim.pause();
-          return;
-        }
-        const media = currentMedia();
-        if (media && typeof media.pause === "function") media.pause();
-      }
-
-      function restartCurrent() {
-        if (anim) {
-          anim.goToAndStop(0, true);
-          anim.play();
-          return;
-        }
-        const media = currentMedia();
-        if (!media) return;
-        if (media.tagName === "VIDEO") {
-          media.currentTime = 0;
-          media.play();
-        } else if (media.tagName === "IMG") {
-          const src = media.src;
-          media.src = "";
-          media.src = src;
-        }
-      }
-
-      function renderJson(data, source) {
-        clearStage();
-        const layers = (data.layers || []).length;
-        const assets = (data.assets || []).length;
-        const playable = layers > 0 || assets > 0;
-        const duration = data.fr ? ((data.op - data.ip) / data.fr).toFixed(2) : "-";
-        setMeta([
-          ["현재 소스", "Lottie JSON"],
-          ["파일", source],
-          ["크기", `${data.w || "-"} × ${data.h || "-"}`],
-          ["길이", `${duration}초 / ${data.fr || "-"}fps`],
-          ["레이어", String(layers)],
-          ["에셋", String(assets)],
-        ]);
-        els.raw.textContent = JSON.stringify(data, null, 2);
-        if (!playable) {
-          showEmpty(true);
-          setStatus(
-            "",
-            "JSON 껍데기만 있고 레이어가 없습니다. GIF/MP4 또는 SVG+CSS를 올리면 모션을 보고 Lottie로 다시 구현할 수 있습니다."
-          );
-          return;
-        }
-        showEmpty(false);
-        const holder = document.createElement("div");
-        holder.className = "lottie";
-        els.stage.appendChild(holder);
-        anim = lottie.loadAnimation({
-          container: holder,
-          renderer: "svg",
-          loop: true,
-          autoplay: true,
-          animationData: data,
-        });
-        setStatus("ok", "Lottie JSON을 스테이지에서 반복 재생합니다.");
-      }
-
-      function renderGif(file, url) {
-        clearStage();
-        showEmpty(false);
-        const img = document.createElement("img");
-        img.alt = file.name;
-        img.src = url;
-        els.stage.appendChild(img);
-        setMeta([
-          ["현재 소스", "GIF"],
-          ["파일", file.name],
-          ["스테이지", "156 × 156"],
-          ["JSON 변환", "레퍼런스 → 벡터 재구현"],
-        ]);
-        els.raw.textContent = `${file.name}\nGIF는 픽셀 영상이라 Lottie JSON으로 그대로 바꾸면 용량이 크고 아이콘 품질이 떨어집니다. 이 화면을 기준으로 SVG 모션을 다시 그려 JSON으로 만듭니다.`;
-        setStatus("ok", "GIF를 재생합니다. 이 모션을 기준으로 벡터 Lottie JSON 구현이 가능합니다.");
-      }
-
-      function renderMp4(file, url) {
-        clearStage();
-        showEmpty(false);
-        const video = document.createElement("video");
-        video.src = url;
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.playsInline = true;
-        els.stage.appendChild(video);
-        setMeta([
-          ["현재 소스", "MP4"],
-          ["파일", file.name],
-          ["스테이지", "156 × 156"],
-          ["JSON 변환", "레퍼런스 → 벡터 재구현"],
-        ]);
-        els.raw.textContent = `${file.name}\nMP4도 GIF와 같이 레퍼런스로 사용합니다. 아이콘 모션이면 SVG+CSS 또는 Lottie JSON으로 다시 그리는 방식이 앱에 맞습니다.`;
-        setStatus("ok", "MP4를 반복 재생합니다. 이 모션을 기준으로 벡터 Lottie JSON 구현이 가능합니다.");
-      }
-
-      function renderSvgCss(svgText, cssText, names) {
-        clearStage();
-        showEmpty(false);
-        if (cssText) {
-          const style = document.createElement("style");
-          style.id = "injected-css";
-          style.textContent = cssText;
-          document.head.appendChild(style);
-        }
-        els.stage.innerHTML = svgText;
-        const svg = els.stage.querySelector("svg");
-        if (svg) {
-          svg.setAttribute("width", "156");
-          svg.setAttribute("height", "156");
-        }
-        setMeta([
-          ["현재 소스", cssText ? "SVG + CSS" : "SVG"],
-          ["파일", names.join(", ")],
-          ["스테이지", "156 × 156"],
-          ["JSON 변환", "가장 정확"],
-        ]);
-        els.raw.textContent = [svgText, cssText].filter(Boolean).join("\n\n/* CSS */\n");
-        setStatus(
-          "ok",
-          cssText
-            ? "SVG와 CSS 모션을 스테이지에 적용했습니다. 이 조합이면 Lottie JSON으로 옮기기 가장 좋습니다."
-            : "SVG를 표시했습니다. CSS 모션 파일도 같이 올리면 애니메이션까지 재현합니다."
-        );
-      }
-
-      async function ingestFiles(fileList) {
-        const files = [...fileList];
-        if (!files.length) return;
-        revokeUrls();
-
-        for (const file of files) {
-          const name = file.name.toLowerCase();
-          if (name.endsWith(".json") || file.type === "application/json") {
-            loaded.json = { file, text: await file.text() };
-          } else if (name.endsWith(".gif") || file.type === "image/gif") {
-            const url = URL.createObjectURL(file);
-            objectUrls.push(url);
-            loaded.gif = { file, url };
-          } else if (name.endsWith(".mp4") || file.type === "video/mp4") {
-            const url = URL.createObjectURL(file);
-            objectUrls.push(url);
-            loaded.mp4 = { file, url };
-          } else if (name.endsWith(".svg") || file.type === "image/svg+xml") {
-            loaded.svg = { file, text: await file.text() };
-          } else if (name.endsWith(".css") || file.type === "text/css") {
-            loaded.css = { file, text: await file.text() };
-          } else {
-            setStatus("", `지원하지 않는 파일입니다: ${file.name}`);
-            return;
-          }
-        }
-
-        if (loaded.json) {
-          try {
-            renderJson(JSON.parse(loaded.json.text), loaded.json.file.name);
-          } catch (error) {
-            setStatus("", `JSON을 읽지 못했습니다: ${error.message}`);
-          }
-          if (loaded.gif || loaded.mp4 || loaded.svg) {
-            els.status.textContent += " GIF/MP4/SVG가 같이 있으면 레퍼런스로 남겨 두고, 비어 있는 JSON 대신 그 모션을 구현하면 됩니다.";
-          }
-          return;
-        }
-        if (loaded.svg) {
-          renderSvgCss(
-            loaded.svg.text,
-            loaded.css ? loaded.css.text : "",
-            [loaded.svg.file.name, loaded.css && loaded.css.file.name].filter(Boolean)
-          );
-          return;
-        }
-        if (loaded.mp4) {
-          renderMp4(loaded.mp4.file, loaded.mp4.url);
-          return;
-        }
-        if (loaded.gif) {
-          renderGif(loaded.gif.file, loaded.gif.url);
-          return;
-        }
-        if (loaded.css) {
-          setStatus("info", "CSS만 있습니다. SVG와 함께 올리면 아이콘 모션을 재현할 수 있습니다.");
-          els.raw.textContent = loaded.css.text;
-        }
-      }
-
-      async function loadDefaultJson() {
-        try {
-          const res = await fetch("./assets/Icon156_03.json");
-          if (!res.ok) return;
-          renderJson(await res.json(), "첨부 파일 Icon156_03.json");
-        } catch {
-          setStatus("info", "GIF, MP4, SVG, CSS, JSON을 올려 주세요.");
-        }
-      }
-
-      els.play.onclick = playCurrent;
-      els.pause.onclick = pauseCurrent;
-      els.stop.onclick = restartCurrent;
-
-      els.file.onchange = (event) => ingestFiles(event.target.files);
-
-      ["dragenter", "dragover"].forEach((type) => {
-        els.drop.addEventListener(type, (event) => {
-          event.preventDefault();
-          els.drop.classList.add("over");
-        });
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const player = await playIconMotion({
+        root: document.getElementById("icon"),
+        playhead: document.getElementById("playhead"),
+        timeLabel: document.getElementById("timeLabel"),
+        reducedMotion: reduced,
       });
-      ["dragleave", "drop"].forEach((type) => {
-        els.drop.addEventListener(type, (event) => {
-          event.preventDefault();
-          els.drop.classList.remove("over");
-        });
-      });
-      els.drop.addEventListener("drop", (event) => ingestFiles(event.dataTransfer.files));
 
-      loadDefaultJson();
+      const lottieAnim = lottie.loadAnimation({
+        container: document.getElementById("lottie"),
+        renderer: "svg",
+        loop: !reduced,
+        autoplay: !reduced,
+        path: "./assets/Icon156_03.json",
+      });
+      if (reduced) lottieAnim.goToAndStop(120, true);
+
+      document.getElementById("play").onclick = () => {
+        player.play();
+        lottieAnim.play();
+      };
+      document.getElementById("pause").onclick = () => {
+        player.pause();
+        lottieAnim.pause();
+      };
+      document.getElementById("stop").onclick = () => {
+        player.restart();
+        lottieAnim.goToAndPlay(0, true);
+      };
     </script>
   </body>
 </html>
