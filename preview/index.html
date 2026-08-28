@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Icon156_03 모션 미리보기</title>
+    <style>
+      :root {
+        --bg: #0f1412;
+        --panel: #171e1b;
+        --line: rgba(255, 255, 255, 0.08);
+        --text: #f4f7f5;
+        --muted: #9aa8a1;
+        --accent: #3dd68c;
+        --danger: #ff6b6b;
+        --stage: #0b0f0d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: radial-gradient(1200px 600px at 20% -10%, #1b3a2c 0%, transparent 55%),
+          var(--bg);
+        color: var(--text);
+        font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 32px 20px 48px;
+      }
+
+      header h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: -0.03em;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(280px, 420px) 1fr;
+        gap: 24px;
+        margin-top: 28px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 20px;
+      }
+
+      .stage-wrap {
+        display: grid;
+        place-items: center;
+        min-height: 420px;
+        background:
+          linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
+          linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
+          var(--stage);
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #lottie {
+        width: 312px;
+        height: 312px;
+      }
+
+      .empty {
+        position: absolute;
+        inset: 0;
+        display: none;
+        place-items: center;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .empty.show {
+        display: grid;
+      }
+
+      .empty .box {
+        width: 156px;
+        height: 156px;
+        border: 1.5px dashed rgba(255, 255, 255, 0.28);
+        border-radius: 36px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        margin: 0 auto 16px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .controls {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      button,
+      label.file {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 16px;
+        background: #24332c;
+        color: var(--text);
+        cursor: pointer;
+        font: inherit;
+      }
+
+      button:hover,
+      label.file:hover {
+        background: #2d4037;
+      }
+
+      button.primary {
+        background: var(--accent);
+        color: #062013;
+        font-weight: 700;
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 0 0 18px;
+      }
+
+      .meta div {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+
+      .meta dt {
+        color: var(--muted);
+        font-size: 12px;
+        margin: 0 0 4px;
+      }
+
+      .meta dd {
+        margin: 0;
+        font-weight: 700;
+      }
+
+      .alert {
+        border-radius: 16px;
+        padding: 14px 16px;
+        background: rgba(255, 107, 107, 0.12);
+        color: #ffd2d2;
+        line-height: 1.55;
+        margin-bottom: 16px;
+      }
+
+      .alert.ok {
+        background: rgba(61, 214, 140, 0.12);
+        color: #d7ffe9;
+      }
+
+      .drop {
+        border: 1.5px dashed rgba(255, 255, 255, 0.22);
+        border-radius: 18px;
+        padding: 18px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .drop.over {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-all;
+        background: #0b0f0d;
+        border-radius: 14px;
+        padding: 12px;
+        font-size: 12px;
+        color: #c9d4ce;
+        max-height: 180px;
+        overflow: auto;
+      }
+
+      @media (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Icon156_03 모션 미리보기</h1>
+        <p>첨부하신 Lottie JSON을 앱 아이콘 크기(156×156)로 재생합니다.</p>
+      </header>
+
+      <div class="grid">
+        <section class="card">
+          <div class="stage-wrap">
+            <div id="lottie"></div>
+            <div class="empty" id="empty">
+              <div>
+                <div class="box">156</div>
+                <strong>재생할 레이어가 없습니다</strong>
+              </div>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="primary" id="play" type="button">재생</button>
+            <button id="pause" type="button">일시정지</button>
+            <button id="stop" type="button">처음으로</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <dl class="meta" id="meta"></dl>
+          <div id="status" class="alert"></div>
+          <div class="drop" id="drop">
+            다른 Lottie JSON을 여기에 놓거나
+            <label class="file">
+              파일 선택
+              <input id="file" type="file" accept="application/json,.json" hidden />
+            </label>
+          </div>
+          <h3>원본 JSON</h3>
+          <pre id="raw"></pre>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script>
+      const els = {
+        stage: document.getElementById("lottie"),
+        empty: document.getElementById("empty"),
+        meta: document.getElementById("meta"),
+        status: document.getElementById("status"),
+        raw: document.getElementById("raw"),
+        drop: document.getElementById("drop"),
+        file: document.getElementById("file"),
+        play: document.getElementById("play"),
+        pause: document.getElementById("pause"),
+        stop: document.getElementById("stop"),
+      };
+
+      let anim = null;
+
+      function setMeta(data, source) {
+        const duration = data.fr ? ((data.op - data.ip) / data.fr).toFixed(2) : "-";
+        const rows = [
+          ["이름", data.nm || "-"],
+          ["크기", `${data.w || "-"} × ${data.h || "-"}`],
+          ["프레임레이트", data.fr ? `${data.fr} fps` : "-"],
+          ["길이", `${duration}초 (${data.ip ?? 0}–${data.op ?? 0}f)`],
+          ["레이어", String((data.layers || []).length)],
+          ["에셋", String((data.assets || []).length)],
+          ["생성기", data.meta && data.meta.g ? data.meta.g : "-"],
+          ["소스", source],
+        ];
+        els.meta.innerHTML = rows
+          .map(
+            ([k, v]) =>
+              `<div><dt>${k}</dt><dd>${v}</dd></div>`
+          )
+          .join("");
+      }
+
+      function loadAnimation(data, source) {
+        if (anim) {
+          anim.destroy();
+          anim = null;
+        }
+        els.stage.innerHTML = "";
+        setMeta(data, source);
+        els.raw.textContent = JSON.stringify(data, null, 2);
+
+        const layers = (data.layers || []).length;
+        const assets = (data.assets || []).length;
+        const playable = layers > 0 || assets > 0;
+
+        els.empty.classList.toggle("show", !playable);
+        els.status.className = playable ? "alert ok" : "alert";
+        els.status.textContent = playable
+          ? "모션 데이터가 있어 왼쪽 스테이지에서 반복 재생합니다."
+          : "이 JSON은 Lottie 껍데기만 있고 layers/assets가 비어 있습니다. Figma Motion 키프레임이 있는 프레임을 선택한 뒤 LottieFiles 플러그인으로 다시 내보내 주세요.";
+
+        if (!playable) return;
+
+        anim = lottie.loadAnimation({
+          container: els.stage,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: data,
+        });
+      }
+
+      async function loadDefault() {
+        const res = await fetch("./assets/Icon156_03.json");
+        const data = await res.json();
+        loadAnimation(data, "첨부 파일 Icon156_03.json");
+      }
+
+      function readFile(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            loadAnimation(JSON.parse(reader.result), file.name);
+          } catch (error) {
+            els.status.className = "alert";
+            els.status.textContent = `JSON을 읽지 못했습니다: ${error.message}`;
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      els.play.onclick = () => anim && anim.play();
+      els.pause.onclick = () => anim && anim.pause();
+      els.stop.onclick = () => {
+        if (!anim) return;
+        anim.goToAndStop(0, true);
+        anim.play();
+      };
+
+      els.file.onchange = (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) readFile(file);
+      };
+
+      ["dragenter", "dragover"].forEach((type) => {
+        els.drop.addEventListener(type, (event) => {
+          event.preventDefault();
+          els.drop.classList.add("over");
+        });
+      });
+      ["dragleave", "drop"].forEach((type) => {
+        els.drop.addEventListener(type, (event) => {
+          event.preventDefault();
+          els.drop.classList.remove("over");
+        });
+      });
+      els.drop.addEventListener("drop", (event) => {
+        const file = event.dataTransfer.files && event.dataTransfer.files[0];
+        if (file) readFile(file);
+      });
+
+      loadDefault();
+    </script>
+  </body>
+</html>
