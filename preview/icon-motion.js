@@ -117,6 +117,7 @@ export async function playIconMotion(options) {
   let start = performance.now();
   let playing = true;
   let raf = 0;
+  let pausedAt = 0;
 
   const tick = (now) => {
     if (!playing) return;
@@ -132,15 +133,17 @@ export async function playIconMotion(options) {
     play() {
       if (playing) return;
       playing = true;
-      start = performance.now() - ((performance.now() - start) % DURATION_MS);
+      start = performance.now() - pausedAt;
       raf = requestAnimationFrame(tick);
     },
     pause() {
       playing = false;
+      pausedAt = (performance.now() - start) % DURATION_MS;
       cancelAnimationFrame(raf);
     },
     restart() {
       playing = true;
+      pausedAt = 0;
       start = performance.now();
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(tick);
