@@ -106,15 +106,57 @@ def rect_shape(w: float, h: float, r: float, color: list[float]) -> list[dict]:
 
 
 def ellipse_shape(size: float, color: list[float]) -> list[dict]:
+    check = [
+        [size * 5 / 22, size * 11.2 / 22],
+        [size * 9.1 / 22, size * 15.4 / 22],
+        [size * 17 / 22, size * 6.8 / 22],
+    ]
+    zeros = [[0, 0] for _ in check]
+    identity = {
+        "ty": "tr",
+        "p": {"a": 0, "k": [0, 0]},
+        "a": {"a": 0, "k": [0, 0]},
+        "s": {"a": 0, "k": [100, 100]},
+        "r": {"a": 0, "k": 0},
+        "o": {"a": 0, "k": 100},
+        "sk": {"a": 0, "k": 0},
+        "sa": {"a": 0, "k": 0},
+    }
     return [
         {
-            "ty": "el",
-            "d": 1,
-            "s": {"a": 0, "k": [size, size]},
-            "p": {"a": 0, "k": [size / 2, size / 2]},
+            "ty": "gr",
+            "nm": "circle",
+            "it": [
+                {
+                    "ty": "el",
+                    "d": 1,
+                    "s": {"a": 0, "k": [size, size]},
+                    "p": {"a": 0, "k": [size / 2, size / 2]},
+                },
+                {"ty": "fl", "c": {"a": 0, "k": color}, "o": {"a": 0, "k": 100}, "r": 1},
+                identity,
+            ],
         },
-        {"ty": "fl", "c": {"a": 0, "k": color}, "o": {"a": 0, "k": 100}, "r": 1},
-        {"ty": "tr", "p": {"a": 0, "k": [0, 0]}, "a": {"a": 0, "k": [0, 0]}, "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}, "sk": {"a": 0, "k": 0}, "sa": {"a": 0, "k": 0}},
+        {
+            "ty": "gr",
+            "nm": "check",
+            "it": [
+                {
+                    "ty": "sh",
+                    "d": 1,
+                    "ks": {"a": 0, "k": {"c": False, "v": check, "i": zeros, "o": zeros}},
+                },
+                {
+                    "ty": "st",
+                    "c": {"a": 0, "k": [1, 1, 1, 1]},
+                    "o": {"a": 0, "k": 100},
+                    "w": {"a": 0, "k": 2.4 * size / 22},
+                    "lc": 2,
+                    "lj": 2,
+                },
+                identity,
+            ],
+        },
     ]
 
 
@@ -133,7 +175,7 @@ def layer(name: str, ind: int, shapes: list, pos: dict, opacity: dict, scale: di
             "s": scale,
         },
         "ao": 0,
-        "shapes": [{"ty": "gr", "nm": name, "it": shapes}],
+        "shapes": shapes if shapes and shapes[0].get("ty") == "gr" and "it" in shapes[0] else [{"ty": "gr", "nm": name, "it": shapes}],
         "ip": 0,
         "op": FRAMES,
         "st": 0,
